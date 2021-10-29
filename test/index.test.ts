@@ -1,7 +1,7 @@
-import { PARSE } from '../src';
+import { PARSE } from "../src";
 
-describe('PARSE', () => {
-  it('works', () => {
+describe("PARSE", () => {
+  it("works", () => {
     const result = PARSE(`
       Sitemap: https://www.flyyer.io/api/sitemap.xml
 
@@ -10,7 +10,19 @@ describe('PARSE', () => {
       Allow: /api/sitemap.xml
       Disallow: /api/
       Disallow: /dashboard/
-    `)
-    expect(result).toMatchObject({"agents": {"*": [{"instruction": "allow", "path": "/"}, {"instruction": "allow", "path": "/api/sitemap.xml"}, {"instruction": "disallow", "path": "/api/"}, {"instruction": "disallow", "path": "/dashboard/"}]}, "crawlDelay": null, "host": null, "sitemaps": ["https://www.flyyer.io/api/sitemap.xml"]});
+    `);
+    expect(result).toMatchObject({
+      agents: {
+        "*": [
+          { instruction: "allow", path: "/" },
+          { instruction: "allow", path: "/api/sitemap.xml" },
+          { instruction: "disallow", path: "/api/" },
+          { instruction: "disallow", path: "/dashboard/" },
+        ],
+      },
+      crawlDelay: null,
+      host: null,
+      sitemaps: ["https://www.flyyer.io/api/sitemap.xml"],
+    });
   });
 });
