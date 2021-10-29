@@ -1,0 +1,12 @@
+!.eslintrc.js
+
+.vscode
+.next
+public
+dist
+node_modules
+worker
+# webpack.config.js
+wappalyzer
+generated
+patches

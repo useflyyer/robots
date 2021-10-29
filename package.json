@@ -1,0 +1,51 @@
+{
+  "name": "@flyyer/robotstxt",
+  "author": "Patricio López Juri",
+  "module": "dist/robotstxt.esm.js",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "eslint '*/**/*.{js,ts,tsx}'",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
+  "size-limit": [
+    {
+      "path": "dist/robotstxt.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/robotstxt.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@flyyer/eslint-config": "^2.1.1",
+    "@size-limit/preset-small-lib": "^6.0.3",
+    "eslint": "^8.1.0",
+    "eslint-plugin-jest": "^25.2.2",
+    "husky": "^7.0.4",
+    "prettier": "^2.4.1",
+    "size-limit": "^6.0.3",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
+  }
+}
