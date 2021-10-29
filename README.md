@@ -11,7 +11,7 @@ yarn add @flyyer/robotstxt
 ```ts
 import * as robotstxt from "@flyyer/robotstxt";
 
-const result = PARSE(`
+const result = robotstxt.PARSE(`
   Sitemap: https://www.flyyer.io/api/sitemap.xml
 
   User-agent: *
