@@ -25,8 +25,7 @@ export function IS_ALLOWED(struct: RobotsTXTStruct, path: string, agent: string)
     })
     .reduce((acc, cur) => {
       // TODO: Why compare string length?
-      if (acc.length < cur.length)
-        acc = cur;
+      if (acc.length < cur.length) acc = cur;
       return acc;
     }, "*");
 
@@ -46,19 +45,15 @@ export function IS_ALLOWED(struct: RobotsTXTStruct, path: string, agent: string)
     let p = (rule.path || "").trim();
     const directive = rule.instruction;
 
-    if (p.length === 0)
-      continue;
-    if (p === "/")
-      p = "/*";
+    if (p.length === 0) continue;
+    if (p === "/") p = "/*";
 
     const pattern = p.replace(/\//gim, "\\/").replace(/\?/, "\\?").replace(/\*/gim, ".*");
     try {
       const reg = new RegExp(pattern, "ig");
 
-      if (path.match(reg) && directive === "disallow")
-        allowed = false;
-      if (path.match(reg) && directive === "allow")
-        allowed = true;
+      if (path.match(reg) && directive === "disallow") allowed = false;
+      if (path.match(reg) && directive === "allow") allowed = true;
     } catch {
       // noop
     }
