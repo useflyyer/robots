@@ -2,7 +2,7 @@
   "name": "@flyyer/robotstxt",
   "author": "Patricio López Juri",
   "module": "dist/robotstxt.esm.js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
