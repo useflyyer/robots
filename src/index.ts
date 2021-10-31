@@ -66,13 +66,20 @@ function PARSE_LINE(line: string): Token | null {
   }
 }
 
-export function PARSE(txt: string) {
+export type ParsedResult = {
+  content: string;
+  groups: Group[];
+  extensions: Extension[];
+};
+
+export function PARSE(txt: string): ParsedResult {
   const content = txt
     .split(/\r?\n/)
     .filter((row) => row.match(/^[ -~]+$/gim))
     .join("\r\n");
 
-  const result = {
+  const result: ParsedResult = {
+    content,
     groups: [] as Group[],
     extensions: [] as Extension[],
   };
