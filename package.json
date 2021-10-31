@@ -37,17 +37,20 @@
     }
   ],
   "devDependencies": {
-    "@flyyer/eslint-config": "^2.1.1",
-    "@size-limit/preset-small-lib": "^6.0.3",
-    "eslint": "^7.32.0",
+    "@flyyer/eslint-config": "^3.0.0",
+    "@size-limit/preset-small-lib": "^6.0.4",
+    "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-typescript": "^3.0.0",
-    "eslint-plugin-jest": "^24.5.2",
+    "eslint-plugin-jest": "^25.2.2",
     "husky": "^7.0.4",
     "prettier": "^2.4.1",
-    "size-limit": "^6.0.3",
+    "size-limit": "^6.0.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "robots-txt-guard": "^1.0.2"
   }
 }

@@ -1,10 +1,12 @@
 # @flyyer/robotstxt
 
-Built with TypeScript.
+Pure JS robots.txt parser and guard built with TypeScript and ESM support (tree-shaking).
 
 ```sh
 yarn add @flyyer/robotstxt
 ```
+
+Works on Node.js, Browsers, ReactNative, and WebWorker environments.
 
 ## Usage
 
@@ -22,34 +24,37 @@ const result = robotstxt.PARSE(`
 `);
 
 console.log(result)
+
+const guard = GUARD(parsed.groups);
+expect(guard.isAllowed("/")).toBe(true);
+expect(guard.isAllowed("/about")).toBe(true);
+expect(guard.isAllowed("/api/sitemap.xml")).toBe(true);
+expect(guard.isAllowed("/dashboard")).toBe(true);
+expect(guard.isAllowed("/dashboard/flyyer")).toBe(false);
+expect(guard.isAllowed("/dashboard/flyyer/projects")).toBe(false);
 ```
 
-```json
+Prints:
+
+```json5
 {
-  "sitemaps": [
-    "https://www.flyyer.io/api/sitemap.xml"
+  "groups": [
+    {
+      "agents": ["*"],
+      "rules": [
+        { "rule": "allow", "path": "/" },
+        { "rule": "allow", "path": "/api/sitemap.xml" },
+        { "rule": "disallow", "path": "/api/" },
+        { "rule": "disallow", "path": "/dashboard/"  },
+      ]
+    }
   ],
-  "agents": {
-    "*": [
-      {
-        "instruction": "allow",
-        "path": "/"
-      },
-      {
-        "instruction": "allow",
-        "path": "/api/sitemap.xml"
-      },
-      {
-        "instruction": "disallow",
-        "path": "/api/"
-      },
-      {
-        "instruction": "disallow",
-        "path": "/dashboard/"
-      }
-    ]
-  },
-  "crawlDelay": null,
-  "host": null
+  "extensions": [
+    { "extension": "sitemap", "value": "https://www.flyyer.io/api/sitemap.xml" },
+  ],
 }
 ```
+
+---
+
+Kudos to [Woorank/robots-txt-guard](https://github.com/Woorank/robots-txt-guard)
