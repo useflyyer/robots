@@ -19,8 +19,9 @@ export function makePathPattern(path: string): Pattern {
     processed = "/" + processed;
   }
 
-  if (processed.includes("*") || processed.endsWith("$")) {
-    if (processed.endsWith("$")) {
+  const isEndingWithDolar = processed.endsWith("$");
+  if (processed.includes("*") || isEndingWithDolar) {
+    if (isEndingWithDolar) {
       processed = processed.slice(0, -1);
     }
 
