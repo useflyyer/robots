@@ -16,6 +16,10 @@ import * as robotstxt from "@flyyer/robotstxt";
 const result = robotstxt.PARSE(`
   Sitemap: https://www.flyyer.io/api/sitemap.xml
 
+  User-agent: googlebot
+  Allow: /
+  Disallow: /secret-page
+
   User-agent: *
   Allow: /
   Allow: /api/sitemap.xml
@@ -26,12 +30,32 @@ const result = robotstxt.PARSE(`
 console.log(result)
 
 const guard = GUARD(parsed.groups);
-expect(guard.isAllowed("/")).toBe(true);
-expect(guard.isAllowed("/about")).toBe(true);
-expect(guard.isAllowed("/api/sitemap.xml")).toBe(true);
-expect(guard.isAllowed("/dashboard")).toBe(true);
-expect(guard.isAllowed("/dashboard/flyyer")).toBe(false);
-expect(guard.isAllowed("/dashboard/flyyer/projects")).toBe(false);
+function isAllowed(path: string, userAgent?: string): boolean {
+  const rule = guard.isAllowedBy(path, userAgent);
+  if (rule) {
+    // rule.allow // path is allowed or not.
+    // rule.pattern.path // path from robots.txt (eg: "/api/sitemap.xml", "/", "/api/").
+    // rule.pattern.regexp // regex version of rule.pattern.path.
+    return rule.allow
+  }
+  // If not rule is found assume true.
+  return true;
+}
+
+expect(isAllowed("/")).toBe(true);
+expect(isAllowed("/about")).toBe(true);
+expect(isAllowed("/api/sitemap.xml")).toBe(true);
+expect(isAllowed("/dashboard")).toBe(true);
+expect(isAllowed("/dashboard/flyyer")).toBe(false);
+expect(isAllowed("/dashboard/flyyer/projects")).toBe(false);
+
+expect(isAllowed("/secret-page")).toBe(true);
+expect(isAllowed("/secret-page", "slackbot")).toBe(true);
+expect(isAllowed("/secret-page", "Slackbot")).toBe(true);
+expect(isAllowed("/secret-page/hello", "Slackbot")).toBe(true);
+expect(isAllowed("/secret-page", "googlebot")).toBe(false);
+expect(isAllowed("/secret-page", "Googlebot")).toBe(false);
+expect(isAllowed("/secret-page/hello", "Googlebot")).toBe(false);
 ```
 
 Prints:
@@ -39,6 +63,13 @@ Prints:
 ```json5
 {
   "groups": [
+    {
+      "agents": ["googlebot"],
+      "rules": [
+        {"path": "/","rule": "allow" },
+        {"path": "/secret-page","rule": "disallow" },
+      ],
+    },
     {
       "agents": ["*"],
       "rules": [
